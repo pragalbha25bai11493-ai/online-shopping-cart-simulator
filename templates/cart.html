@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f4f4f4;
+        }
+
+        .navbar {
+            background: #0f766e;
+            color: #fff;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .navbar a {
+            color: #0f766e;
+            background: #fff;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px 30px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #e5e7eb;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .total-row td {
+            font-weight: bold;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .actions {
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: #0f766e;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #115e57;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .empty {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Your Cart</h1>
+        <a href="{{ url_for('index') }}">Back to Products</a>
+    </div>
+
+    <div class="container">
+        {% if items %}
+            <h2>Items Added</h2>
+            <table>
+                <tr>
+                    <th>Product</th>
+                    <th>Price (₹)</th>
+                    <th>Quantity</th>
+                    <th>Line Total (₹)</th>
+                </tr>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.qty }}</td>
+                    <td>{{ item.line_total }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="total-row">
+                    <td colspan="3">Total Amount</td>
+                    <td>₹ {{ total_price }}</td>
+                </tr>
+            </table>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="{{ url_for('clear_cart') }}">
+                    ✅ Checkout / Clear Cart
+                </a>
+                <a class="btn btn-secondary" href="{{ url_for('index') }}">
+                    ⬅ Continue Shopping
+                </a>
+            </div>
+        {% else %}
+            <div class="empty">
+                <h2>Your cart is empty.</h2>
+                <p>Add some products from the home page to simulate a real shopping experience.</p>
+                <a class="btn btn-primary" href="{{ url_for('index') }}">
+                    Browse Products
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
